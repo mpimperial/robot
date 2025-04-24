@@ -37,5 +37,4 @@ verify if error message is correct
     ${result} =    Get Text    ${Error_Message}
     Should Be Equal As Strings    ${result}    Incorrect username/password.
 
-verify card titles in the page
     
