@@ -12,10 +12,10 @@ ${url} =               https://web.uat.ucms.palawanpawnshop.com/business/#/login
 
 open ucms browser
     [Documentation]    Open the browser and navigate to the login page
-    Create Webdriver    Chrome
+    Create Webdriver   Edge
     Go To    ${url}
 
 Sleep and Close Browser session
     [Documentation]    Close the browser after test execution
-    Sleep    5s
+    Sleep    3s
     Close Browser

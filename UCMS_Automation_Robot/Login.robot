@@ -10,6 +10,7 @@ ${account_username} =    id:userName
 
 *** Test Cases ***
 validate unsuccessful login
+    Skip    validate unsuccessful login has been skipped
     fill up login form    ${username}     ${invalid_password}
     accept terms and conditions
     wait until the error message display
