@@ -17,5 +17,5 @@ open the browser with the Mortgage payment url
 
 Close Browser Session
     [Documentation]    Close the browser after test execution
-    Sleep    5s
+    Sleep    3s
     Close Browser
