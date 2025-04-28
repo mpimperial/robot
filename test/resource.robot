@@ -12,9 +12,10 @@ ${url} =         https://rahulshettyacademy.com/loginpagePractise/
 
 open the browser with the Mortgage payment url
     [Documentation]    Open the browser and navigate to the login page
-    Create Webdriver    Chrome
+    Create Webdriver   Edge
     Go To    ${url}
 
-Close Browser session
+Close Browser Session
     [Documentation]    Close the browser after test execution
+    Sleep    3s
     Close Browser

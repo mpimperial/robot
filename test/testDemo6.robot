@@ -1,13 +1,16 @@
 *** Settings ***
 Library        SeleniumLibrary
 Library        Collections
+Library        ../customLibraries/Shop.py
 Test Setup     open the browser with the Mortgage payment url
 Test Teardown  Close Browser session
 Resource       resource.robot
+Resource       ../po/Landing_page.robot
+Resource       ../po/Shop_page.robot
 
 *** Variables ***
 ${Error_Message}        css:.alert-danger
-${Shop_page_loads}      css:.nav-link
+@{list_of_products}     Blackberry    Nokia Edge
 
 *** Test Cases ***
 #Validate Unsuccessful Login
@@ -17,29 +20,19 @@ ${Shop_page_loads}      css:.nav-link
 #    wait until the element in page is visible    ${Error_Message}    10s
 #    verify if error message is correct
 
-#Validate Cards display in the shopping page
-#
-#    [Documentation]    Test login with valid credentials and verify that shopping page loads
-#    fill the login form    ${username}    ${valid_password}
-#    wait until the element in page is visible    ${Shop_page_loads}    10s
-#    verify card titles in the page
-#    select the card    Nokia Edge
+Validate Cards display in the shopping page
 
-select form and navigate to child window
-    fill the login form and select user option     ${username}    ${valid_password}
+    [Documentation]    Test login with valid credentials and verify that shopping page loads
+    Landing_page.fill the login form    ${username}    ${valid_password}
+    Shop_page.wait until the element in page is visible
+    verify card titles in the page
+    Hello World
+    Add Items To Cart And Checkout    ${list_of_products}
+
+#select form and navigate to child window
+#    fill the login form and select user option     ${username}    ${valid_password}
 
 
-*** Keywords ***
-
-fill the login form
-    [arguments]    ${username}    ${password}
-    Input Text        id:username    ${username}
-    Input Password    id:password    ${password}
-    Click Button      id:signInBtn
-
-wait until the element in page is visible
-    [arguments]    ${element}    ${timeout}
-    Wait Until Element Is Visible    ${element}    ${timeout}
 
 verify if error message is correct
     ${result} =    Get Text    ${Error_Message}
