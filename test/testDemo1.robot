@@ -1,6 +1,8 @@
 *** Settings ***
 Documentation    To validate the Login form
 Library    SeleniumLibrary
+Test Teardown  Close Browser session
+Resource    resource.robot
 
 *** Variables ***
 ${Error_Message}    css:.alert-danger

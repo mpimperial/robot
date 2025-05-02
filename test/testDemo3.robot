@@ -24,7 +24,7 @@ select the link of child window
 
 verify the user is switched to child window
     Switch Window    NEW
-    Element Text Should Be    css:h2    DOCUMENTS REQUEST
+    Element Text Should Be    css:h1    DOCUMENTS REQUEST
 
 grab the email from child window
     ${text} =    Get Text    css:.red

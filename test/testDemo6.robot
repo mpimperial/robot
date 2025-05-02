@@ -7,66 +7,33 @@ Test Teardown  Close Browser session
 Resource       resource.robot
 Resource       ../po/Landing_page.robot
 Resource       ../po/Shop_page.robot
+Resource       ../po/Confirmation_page.robot
+Resource       ../po/Checkout_page.robot
 
 *** Variables ***
-${Error_Message}        css:.alert-danger
 @{list_of_products}     Blackberry    Nokia Edge
+${country_name}    India
 
 *** Test Cases ***
-#Validate Unsuccessful Login
-#
-#    [Documentation]    Test login with invalid credentials and verify error message
-#    fill the login form    ${username}    ${invalid_password}
-#    wait until the element in page is visible    ${Error_Message}    10s
-#    verify if error message is correct
+Validate Unsuccessful Login
+
+    [Documentation]    Test login with invalid credentials and verify error message
+    Landing_page.fill the login form    ${username}    ${invalid_password}
+    Landing_page.wait until the element in page is visible
+    Landing_page.verify if error message is correct
 
 Validate Cards display in the shopping page
 
     [Documentation]    Test login with valid credentials and verify that shopping page loads
     Landing_page.fill the login form    ${username}    ${valid_password}
     Shop_page.wait until the element in page is visible
-    verify card titles in the page
-    Hello World
+    Shop_page.verify card titles in the page
     Add Items To Cart And Checkout    ${list_of_products}
+    Checkout_page.validate checkout products then proceed
+    Confirmation_page.enter the country and select terms then proceed    ${country_name}
+    Confirmation_page.purchase products and verify if successful
+#    select the card    iphone X
 
-#select form and navigate to child window
-#    fill the login form and select user option     ${username}    ${valid_password}
+select form and user option
+    Landing_page.fill the login form and select user option    ${username}    ${valid_password}
 
-
-
-verify if error message is correct
-    ${result} =    Get Text    ${Error_Message}
-    Should Be Equal As Strings    ${result}    Incorrect username/password.
-
-verify card titles in the page
-    @{expectedList} =    Create List    iphone X    Samsung Note 8    Nokia Edge    Blackberry
-    ${elements} =    Get Webelements    css:.card-title
-    @{actualList} =    Create List
-    FOR    ${el}    IN    @{elements}
-        Append To List    ${actualList}    ${el.text}
-        log     ${actualList}
-    END
-    Lists Should Be Equal    ${expectedList}   ${actualList}
-
-select the card
-    [arguments]    ${cardName}
-    ${elements} =    Get Webelements    css:.card-title
-    ${index} =    Set Variable    1
-     FOR    ${element}    IN    @{elements}
-        Exit For Loop If    '${element.text}' == '${cardName}'
-        ${index} =    Evaluate    ${index} + 1
-    END
-    Click Button    xpath=(//*[@class='card-footer'])[${index}]/button
-
-fill the login form and select user option
-    [arguments]    ${username}    ${password}
-    Input Text        id:username    ${username}
-    Input Password    id:password    ${password}
-    Click Element     css:input[value='user']
-    Wait Until Element Is Visible    css:.modal-body
-    Click Element     okayBtn
-    Click Element     okayBtn
-    Wait Until Element Is Not Visible    css:.modal-body
-    Select From List By Value    css:select.form-control    teach
-    Select Checkbox    terms
-    Checkbox Should Be Selected    terms

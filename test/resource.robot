@@ -19,3 +19,7 @@ Close Browser Session
     [Documentation]    Close the browser after test execution
     Sleep    3s
     Close Browser
+
+wait until element passed is located on page
+    [Arguments]    ${page_locator}    ${timeout}
+    Wait Until Element Is Visible    ${page_locator}    ${timeout}
